@@ -1,48 +1,18 @@
-
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
+import com.codeborne.selenide.Selectors;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.Keys.DELETE;
-
+import static org.openqa.selenium.Keys.ENTER;
 
 //java -jar ./artifacts/app-card-delivery.jar
 public class WebSiteTest {
-    private WebDriver driver;
-
-    ChromeOptions options = new ChromeOptions();
-
-    {
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
-    }
-
-    @BeforeAll
-    static void setUpAll() {
-        WebDriverManager.chromedriver().setup();
-    }
-
-    @BeforeEach
-    void setUp() {
-        driver = new ChromeDriver(options);
-        driver.get("http://localhost:9999/");
-    }
-
-    @AfterEach
-    void tearDown() {
-        driver.quit();
-        driver = null;
-    }
-
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
     String data = LocalDate.now().plusDays(7).format(formatter);
 
