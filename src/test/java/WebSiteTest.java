@@ -1,10 +1,12 @@
 
+import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -26,19 +28,15 @@ public class WebSiteTest {
         $("[data-test-id='date'] input").doubleClick();
         $("[data-test-id='date'] input").sendKeys(DELETE);
         $("[data-test-id='date'] input").setValue(data);
-        $("[data-test-id='name']").$("[class='input__box'] input").setValue("Артем");
-        $("[data-test-id='phone']").$("[class='input__box'] input").setValue("+79532376054");
+        $("[data-test-id='name'] input").setValue("Артем");
+        $("[data-test-id='phone'] input").setValue("+79532376054");
         $("[class='checkbox__text']").click();
         $("[class = 'button__content']").click();
+        $("[class='notification__title']")
+                .shouldBe(Condition.visible, Duration.ofSeconds(15))
+                .shouldHave(Condition.text("Успешно"));
 
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        String actual = $("[data-test-id=notification]").$("[class='notification__title']").getText();
-        String expected = "Успешно!";
-        Assertions.assertEquals(expected, actual);
+
 
     }
 
