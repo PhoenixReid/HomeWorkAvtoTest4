@@ -10,6 +10,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static org.openqa.selenium.Keys.DELETE;
@@ -17,7 +18,7 @@ import static org.openqa.selenium.Keys.ENTER;
 
 //java -jar ./artifacts/app-card-delivery.jar
 public class WebSiteTest {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     String data = LocalDate.now().plusDays(7).format(formatter);
 
     @Test
@@ -32,9 +33,9 @@ public class WebSiteTest {
         $("[data-test-id='phone'] input").setValue("+79532376054");
         $("[class='checkbox__text']").click();
         $("[class = 'button__content']").click();
-        $("[class='notification__title']")
+        $("[class='notification__content']")
                 .shouldBe(Condition.visible, Duration.ofSeconds(15))
-                .shouldHave(Condition.text("Успешно"));
+                .shouldHave(text("Встреча успешно забронирована на " + data));
 
 
 
